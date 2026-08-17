@@ -1,0 +1,82 @@
+<div class="bundle-product-details">
+  <div class="bundle-product-details__products">
+
+    <h3>Select a product to view details</h3>
+
+    {% for block in section.blocks %}
+      {% assign product = block.settings.product %}
+
+      {% if product != blank %}
+        <div class="bundle-product-card" {{ block.shopify_attributes }}>
+          {% if product.featured_image %}
+            <div class="bundle-product-card__image">
+              {{
+                product.featured_image | image_url: width: 200 | image_tag
+              }}
+            </div>
+          {% endif %}
+
+          {% assign product_details = product.metafields.custom.stress_complx_metafield.value %}
+          {% comment %} {{ product_details | json }} {% endcomment %}
+          {% for item in product_details %}
+            {{ item.strength | json }}
+          {% endfor %}
+          <div class="bundle-product-card__info">
+            <h4>{{ product.title }}</h4>
+
+            {% if product_details.strength != blank %}
+              <span class="bundle-product-card__strength">
+                {{ product_details.strength }}
+              </span>
+            {% endif %}
+
+            {% if product.url != blank %}
+              <a href="{{ product.url }}" class="bundle-product-card__link">
+                View product
+              </a>
+            {% endif %}
+          </div>
+        </div>
+      {% endif %}
+    {% endfor %}
+
+  </div>
+
+  <div class="bundle-product-details__content">
+    <!-- We will build the tabs and product details here next -->
+  </div>
+</div>
+
+{% schema %}
+  {
+    "name": "Bundle product details",
+    "settings": [],
+    "blocks": [
+      {
+        "type": "product",
+        "name": "Product",
+        "settings": [
+          {
+            "type": "product",
+            "id": "product",
+            "label": "Product"
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Bundle product details",
+        "blocks": [
+          {
+            "type": "product"
+          }, {
+            "type": "product"
+          }, {
+            "type": "product"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}
