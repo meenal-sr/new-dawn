@@ -41,27 +41,28 @@
 
               <div class="bundle-product-card__info">
 
-                <h4>
-                  {{ product.title }}
-                </h4>
+  <h4>
+    {{ product.title }}
+  </h4>
 
-                {% for item in product_details %}
-                  {% if item.strength != blank %}
-                    <span class="bundle-product-card__strength">
-                      {{ item.strength }}
-                    </span>
-                  {% endif %}
-                {% endfor %}
+  {% for item in product_details %}
+    {% if item.strength != blank %}
+      <span class="bundle-product-card__strength">
+        {{ item.strength }}
+      </span>
+    {% endif %}
+  {% endfor %}
 
-                {% if product.id == selected_product.id and product.url != blank %}
+</div>
 
-                  <a href="{{ product.url }}" class="bundle-product-card__link">
-                    View product
-                  </a>
-
-                {% endif %}
-
-              </div>
+{% if product.url != blank %}
+  <a
+    href="{{ product.url }}"
+    class="bundle-product-card__link"
+  >
+    View product ↗
+  </a>
+{% endif %}
 
             </div>
 
@@ -77,8 +78,6 @@
     <div class="bundle-product-details__content">
 
       {% if selected_product != blank %}
-
-        {% assign product_details_right = selected_product.metafields.custom.stress_complx_metafield_right.value %}
 
         <div class="bundle-product-details__tabs">
 
@@ -109,36 +108,54 @@
             onclick="openBundleTab(event, 'safety')">
             Safety
           </button>
+
         </div>
+
 
         <div class="bundle-product-details__tab-content">
 
-          <div id="benefits" class="bundle-tab-content">
-            {% for item in product_details_right %}
-              {{ item.benefits | metafield_tag }}
-            {% endfor %}
-          </div>
+          {% for block in section.blocks %}
+
+            {% assign product = block.settings.product %}
+
+            {% if product != blank %}
+
+              {% assign product_details_right = product.metafields.custom.stress_complx_metafield_right.value %}
+
+              <div class="bundle-product-content{% if product.id == selected_product.id %} bundle-product-content--active{% endif %}" data-product-content="{{ product.id }}">
+
+                <div id="benefits-{{ product.id }}" class="bundle-tab-content">
+                  {% for item in product_details_right %}
+                    {{ item.benefits | metafield_tag }}
+                  {% endfor %}
+                </div>
 
 
-          <div id="ingredients" class="bundle-tab-content">
-            {% for item in product_details_right %}
-              {{ item.ingredients | metafield_tag }}
-            {% endfor %}
-          </div>
+                <div id="ingredients-{{ product.id }}" class="bundle-tab-content">
+                  {% for item in product_details_right %}
+                    {{ item.ingredients | metafield_tag }}
+                  {% endfor %}
+                </div>
 
 
-          <div id="how-to-use" class="bundle-tab-content">
-            {% for item in product_details_right %}
-              {{ item.how_to_use | metafield_tag }}
-            {% endfor %}
-          </div>
+                <div id="how-to-use-{{ product.id }}" class="bundle-tab-content">
+                  {% for item in product_details_right %}
+                    {{ item.how_to_use | metafield_tag }}
+                  {% endfor %}
+                </div>
 
 
-          <div id="safety" class="bundle-tab-content">
-            {% for item in product_details_right %}
-              {{ item.safety | metafield_tag }}
-            {% endfor %}
-          </div>
+                <div id="safety-{{ product.id }}" class="bundle-tab-content">
+                  {% for item in product_details_right %}
+                    {{ item.safety | metafield_tag }}
+                  {% endfor %}
+                </div>
+
+              </div>
+
+            {% endif %}
+
+          {% endfor %}
 
         </div>
 
@@ -152,23 +169,108 @@
 <script>
   function openBundleTab(event, tabName) {
 
-    var tabContent = document.querySelectorAll('.bundle-tab-content');
     var tabLinks = document.querySelectorAll('.bundle-tab');
-
-    for (var i = 0; i < tabContent.length; i++) {
-      tabContent[i].style.display = 'none';
-    }
+    var tabContent = document.querySelectorAll('.bundle-tab-content');
 
     for (var i = 0; i < tabLinks.length; i++) {
       tabLinks[i].classList.remove('active');
     }
 
-    document.getElementById(tabName).style.display = 'block';
+    for (var i = 0; i < tabContent.length; i++) {
+      tabContent[i].style.display = 'none';
+    }
 
     event.currentTarget.classList.add('active');
+
+    var activeProduct = document.querySelector(
+      '.bundle-product-content--active'
+    );
+
+    if (activeProduct) {
+      var selectedContent = activeProduct.querySelector(
+        '[id^="' + tabName + '-"]'
+      );
+
+      if (selectedContent) {
+        selectedContent.style.display = 'block';
+      }
+    }
   }
 
-  document.getElementById('benefits').style.display = 'block';
+
+  document.addEventListener('DOMContentLoaded', function () {
+
+    var productCards = document.querySelectorAll(
+      '.bundle-product-card'
+    );
+
+    productCards.forEach(function (card) {
+
+      card.addEventListener('click', function () {
+
+        var productId = card.dataset.productId;
+
+        var productContents = document.querySelectorAll(
+          '.bundle-product-content'
+        );
+
+        productCards.forEach(function (item) {
+          item.classList.remove(
+            'bundle-product-card--active'
+          );
+        });
+
+        productContents.forEach(function (content) {
+          content.classList.remove(
+            'bundle-product-content--active'
+          );
+        });
+
+        card.classList.add(
+          'bundle-product-card--active'
+        );
+
+        var selectedProductContent = document.querySelector(
+          '[data-product-content="' + productId + '"]'
+        );
+
+        if (selectedProductContent) {
+          selectedProductContent.classList.add(
+            'bundle-product-content--active'
+          );
+        }
+
+        var activeTab = document.querySelector(
+          '.bundle-tab.active'
+        );
+
+        if (activeTab) {
+          var tabName = activeTab.textContent
+            .trim()
+            .toLowerCase()
+            .replace(' ', '-');
+
+          var selectedTabContent =
+            selectedProductContent.querySelector(
+              '[id^="' + tabName + '-"]'
+            );
+
+          document
+            .querySelectorAll('.bundle-tab-content')
+            .forEach(function (content) {
+              content.style.display = 'none';
+            });
+
+          if (selectedTabContent) {
+            selectedTabContent.style.display = 'block';
+          }
+        }
+
+      });
+
+    });
+
+  });
 </script>
 
 {% schema %}
