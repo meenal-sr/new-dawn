@@ -1,51 +1,175 @@
-<div class="bundle-product-details">
-  <div class="bundle-product-details__products">
+{{ 'bundle-product-details.css' | asset_url | stylesheet_tag }}
 
-    <h3>Select a product to view details</h3>
+{% assign selected_product = blank %}
 
-    {% for block in section.blocks %}
-      {% assign product = block.settings.product %}
+{% for block in section.blocks %}
+  {% if block.settings.product != blank %}
+    {% assign selected_product = block.settings.product %}
+    {% break %}
+  {% endif %}
+{% endfor %}
+<section class="bundle-product-details-section">
 
-      {% if product != blank %}
-        <div class="bundle-product-card" {{ block.shopify_attributes }}>
-          {% if product.featured_image %}
-            <div class="bundle-product-card__image">
-              {{
-                product.featured_image | image_url: width: 200 | image_tag
-              }}
+  <div class="bundle-product-details">
+
+    <!-- LEFT SIDE -->
+    <div class="bundle-product-details__products">
+
+      <h3>Select a product to view details</h3>
+
+      <div class="bundle-product-list">
+
+        {% for block in section.blocks %}
+          {% assign product = block.settings.product %}
+
+          {% if product != blank %}
+
+            {% assign product_details = product.metafields.custom.stress_complx_metafield_left.value %}
+
+            <div
+              class="bundle-product-card{% if product.id == selected_product.id %} bundle-product-card--active{% endif %}"
+              data-product-id="{{ product.id }}"
+              {{ block.shopify_attributes }}>
+
+              {% if product.featured_image %}
+                <div class="bundle-product-card__image">
+                  {{
+                    product.featured_image | image_url: width: 300 | image_tag: widths: '100, 150, 200, 300', sizes: '150px', loading: 'lazy', alt: product.featured_image.alt | default: product.title | escape
+                  }}
+                </div>
+              {% endif %}
+
+              <div class="bundle-product-card__info">
+
+                <h4>
+                  {{ product.title }}
+                </h4>
+
+                {% for item in product_details %}
+                  {% if item.strength != blank %}
+                    <span class="bundle-product-card__strength">
+                      {{ item.strength }}
+                    </span>
+                  {% endif %}
+                {% endfor %}
+
+                {% if product.id == selected_product.id and product.url != blank %}
+
+                  <a href="{{ product.url }}" class="bundle-product-card__link">
+                    View product
+                  </a>
+
+                {% endif %}
+
+              </div>
+
             </div>
+
           {% endif %}
+        {% endfor %}
 
-          {% assign product_details = product.metafields.custom.stress_complx_metafield.value %}
-          {% comment %} {{ product_details | json }} {% endcomment %}
-          {% for item in product_details %}
-            {{ item.strength | json }}
-          {% endfor %}
-          <div class="bundle-product-card__info">
-            <h4>{{ product.title }}</h4>
+      </div>
 
-            {% if product_details.strength != blank %}
-              <span class="bundle-product-card__strength">
-                {{ product_details.strength }}
-              </span>
-            {% endif %}
+    </div>
 
-            {% if product.url != blank %}
-              <a href="{{ product.url }}" class="bundle-product-card__link">
-                View product
-              </a>
-            {% endif %}
-          </div>
+
+    <!-- RIGHT SIDE -->
+    <div class="bundle-product-details__content">
+
+      {% if selected_product != blank %}
+
+        {% assign product_details_right = selected_product.metafields.custom.stress_complx_metafield_right.value %}
+
+        <div class="bundle-product-details__tabs">
+
+          <button
+            type="button"
+            class="bundle-tab active"
+            onclick="openBundleTab(event, 'benefits')">
+            Benefits
+          </button>
+
+          <button
+            type="button"
+            class="bundle-tab"
+            onclick="openBundleTab(event, 'ingredients')">
+            Ingredients
+          </button>
+
+          <button
+            type="button"
+            class="bundle-tab"
+            onclick="openBundleTab(event, 'how-to-use')">
+            How to use
+          </button>
+
+          <button
+            type="button"
+            class="bundle-tab"
+            onclick="openBundleTab(event, 'safety')">
+            Safety
+          </button>
         </div>
+
+        <div class="bundle-product-details__tab-content">
+
+          <div id="benefits" class="bundle-tab-content">
+            {% for item in product_details_right %}
+              {{ item.benefits | metafield_tag }}
+            {% endfor %}
+          </div>
+
+
+          <div id="ingredients" class="bundle-tab-content">
+            {% for item in product_details_right %}
+              {{ item.ingredients | metafield_tag }}
+            {% endfor %}
+          </div>
+
+
+          <div id="how-to-use" class="bundle-tab-content">
+            {% for item in product_details_right %}
+              {{ item.how_to_use | metafield_tag }}
+            {% endfor %}
+          </div>
+
+
+          <div id="safety" class="bundle-tab-content">
+            {% for item in product_details_right %}
+              {{ item.safety | metafield_tag }}
+            {% endfor %}
+          </div>
+
+        </div>
+
       {% endif %}
-    {% endfor %}
+
+    </div>
 
   </div>
+</section>
 
-  <div class="bundle-product-details__content">
-    <!-- We will build the tabs and product details here next -->
-  </div>
-</div>
+<script>
+  function openBundleTab(event, tabName) {
+
+    var tabContent = document.querySelectorAll('.bundle-tab-content');
+    var tabLinks = document.querySelectorAll('.bundle-tab');
+
+    for (var i = 0; i < tabContent.length; i++) {
+      tabContent[i].style.display = 'none';
+    }
+
+    for (var i = 0; i < tabLinks.length; i++) {
+      tabLinks[i].classList.remove('active');
+    }
+
+    document.getElementById(tabName).style.display = 'block';
+
+    event.currentTarget.classList.add('active');
+  }
+
+  document.getElementById('benefits').style.display = 'block';
+</script>
 
 {% schema %}
   {
