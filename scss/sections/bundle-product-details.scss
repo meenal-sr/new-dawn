@@ -146,3 +146,139 @@
 .bundle-product-content--active {
   display: block;
 }
+/* Hide arrow on desktop */
+.bundle-product-card__arrow {
+  display: none;
+}
+/* Hide mobile accordion natively on Desktop */
+.bundle-mobile-accordion {
+  display: none;
+}
+
+/* =========================================================
+   MOBILE ONLY (1200px and below)
+   ========================================================= */
+@media screen and (max-width: 1200px) {
+    .bundle-product-details {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    padding: 25px 20px 40px; /* 20px left and right padding */
+    box-sizing: border-box;
+  }
+
+  /* Force the product column to take up the entire width */
+  .bundle-product-details__products {
+    display: block;
+    width: 100%;
+  }
+
+  .bundle-product-list {
+    width: 100%;
+  }
+  
+  /* 1. Base Mobile Card (Forces children to stack horizontally) */
+  .bundle-product-card {
+    position: relative;
+    flex-wrap: wrap; /* THIS is what forces the button and accordion to drop to the next line */
+    align-items: flex-start;
+    padding-top: 15px; /* Adds breathing room to the top */
+  }
+
+  /* Remove the desktop absolute padding so the card hugs the accordion */
+  .bundle-product-card--active {
+    padding-bottom: 0; 
+  }
+
+  /* 2. Product Info (Ensure it takes up the rest of the top row) */
+  .bundle-product-card__info {
+    flex: 1;
+    padding-right: 40px; /* Keeps text away from the arrow */
+    margin-top: 5px;
+  }
+
+  /* 3. Arrow Toggle (Lock it to the top row) */
+  .bundle-product-card__arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    right: 20px;
+    top: 60px; /* Locks it to the image height instead of the center of the expanded card */
+    transform: translateY(-50%);
+    pointer-events: none;
+    transition: transform 0.3s ease;
+  }
+
+  .bundle-product-card__arrow svg {
+    display: block;
+  }
+
+  .bundle-product-card.bundle-product-card--active .bundle-product-card__arrow {
+    transform: translateY(-50%) rotate(180deg);
+    top: 60px;
+  }
+
+  /* 4. View Product Link (Force it to 100% width on the second row) */
+  .bundle-product-card__link {
+    position: static; /* Removes desktop absolute positioning */
+    width: 100%;
+    margin-top: 15px;
+  }
+
+  /* 5. Mobile Accordion Container (Force it to 100% width on the bottom row) */
+  .bundle-product-card--active .bundle-mobile-accordion {
+    display: block;
+    width: 100%;
+    margin-top: 10px;
+  }
+
+  /* 6. Accordion Buttons & Content */
+  .bundle-mobile-accordion__btn {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 10px;
+    background: transparent;
+    border: 0;
+    border-bottom: 1px solid #eee;
+    color: #304b7d;
+    font-size: 15px;
+    font-weight: 600;
+    text-transform: lowercase;
+    cursor: pointer;
+  }
+
+  .bundle-mobile-accordion__btn::after {
+    content: '+';
+    font-size: 22px;
+    font-weight: 400;
+  }
+
+  .bundle-mobile-accordion__item.is-open .bundle-mobile-accordion__btn::after {
+    content: '−';
+  }
+
+  .bundle-mobile-accordion__content {
+    display: none;
+    padding: 16px 10px;
+    color: #304b7d;
+    font-size: 13px;
+    line-height: 1.6;
+    border-bottom: 1px solid #eee;
+  }
+
+  .bundle-mobile-accordion__content ul {
+    margin: 0;
+    padding-left: 18px;
+  }
+
+  .bundle-mobile-accordion__item.is-open .bundle-mobile-accordion__content {
+    display: block;
+  }
+  /* Completely hide the desktop right-side tab column on mobile */
+  .bundle-product-details__content {
+    display: none !important;
+  }
+}

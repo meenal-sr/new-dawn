@@ -54,6 +54,11 @@
   {% endfor %}
 
 </div>
+<div class="bundle-product-card__arrow">
+  <svg width="14" height="8" viewBox="0 0 14 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M1 1L7 7L13 1" stroke="#304b7d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+</div>
 
 {% if product.url != blank %}
   <a
@@ -62,6 +67,39 @@
   >
     View product ↗
   </a>
+  {% assign product_details_right = product.metafields.custom.stress_complx_metafield_right.value %}
+<div class="bundle-mobile-accordion">
+  <div class="bundle-mobile-accordion__item">
+    <button type="button" class="bundle-mobile-accordion__btn">benefits</button>
+    <div class="bundle-mobile-accordion__content">
+      {% for item in product_details_right %}{{ item.benefits | metafield_tag }}{% endfor %}
+    </div>
+  </div>
+
+  <div class="bundle-mobile-accordion__item">
+    <button type="button" class="bundle-mobile-accordion__btn">ingredients</button>
+    <div class="bundle-mobile-accordion__content">
+      {% for item in product_details_right %}{{ item.ingredients | metafield_tag }}{% endfor %}
+    </div>
+  </div>
+
+  <div class="bundle-mobile-accordion__item">
+    <button type="button" class="bundle-mobile-accordion__btn">how to use</button>
+    <div class="bundle-mobile-accordion__content">
+      {% for item in product_details_right %}{{ item.how_to_use | metafield_tag }}{% endfor %}
+    </div>
+  </div>
+
+  <div class="bundle-mobile-accordion__item">
+    <button type="button" class="bundle-mobile-accordion__btn">safety</button>
+    <div class="bundle-mobile-accordion__content">
+      {% for item in product_details_right %}{{ item.safety | metafield_tag }}{% endfor %}
+    </div>
+  </div>
+</div>
+<!-- END MOBILE ACCORDION -->
+
+
 {% endif %}
 
             </div>
@@ -203,10 +241,21 @@
     var productCards = document.querySelectorAll(
       '.bundle-product-card'
     );
+    if (window.innerWidth <= 1200) {
+    productCards.forEach(function (card) {
+      card.classList.remove('bundle-product-card--active');
+    });
+  }
 
     productCards.forEach(function (card) {
 
-      card.addEventListener('click', function () {
+      card.addEventListener('click', function (e) {
+if (e.target.closest('a') || e.target.closest('.bundle-mobile-accordion')) return;        // <-- ADDED THESE 2 LINES
+        var isMobile = window.innerWidth <= 1200;
+        var wasActive = card.classList.contains('bundle-product-card--active');
+        
+        
+
 
         var productId = card.dataset.productId;
 
@@ -219,6 +268,12 @@
             'bundle-product-card--active'
           );
         });
+        if (isMobile) {
+          if (!wasActive) {
+            card.classList.add('bundle-product-card--active');
+          }
+          return; // Stop running the rest of the code on mobile
+        }
 
         productContents.forEach(function (content) {
           content.classList.remove(
@@ -268,6 +323,25 @@
 
       });
 
+    });
+    var mobileAccordionBtns = document.querySelectorAll('.bundle-mobile-accordion__btn');
+    mobileAccordionBtns.forEach(function (btn) {
+      btn.addEventListener('click', function (e) {
+        
+        var item = this.closest('.bundle-mobile-accordion__item');
+        var parentCard = item.closest('.bundle-product-card');
+        var isOpen = item.classList.contains('is-open');
+
+        // Close all other tabs inside THIS specific product card
+        parentCard.querySelectorAll('.bundle-mobile-accordion__item').forEach(function (i) {
+          i.classList.remove('is-open');
+        });
+
+        // Toggle the clicked tab open if it was closed
+        if (!isOpen) {
+          item.classList.add('is-open');
+        }
+      });
     });
 
   });
