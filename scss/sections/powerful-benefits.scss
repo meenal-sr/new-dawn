@@ -1,0 +1,215 @@
+/* =========================================================
+   VARIABLES
+========================================================= */
+$color-primary: #304b7d;
+$color-bg: #f8f8fa;
+$color-border: #eee;
+$color-progress-track: #e0e0e0;
+$transition-default: 0.3s ease;
+
+/* =========================================================
+   MOBILE FIRST STYLES
+========================================================= */
+.powerful-benefits-section {
+  background: $color-bg;
+  padding: 50px 20px;
+  overflow: hidden;
+
+  .pb-container {
+    padding: 0 48px;
+    margin: 0 auto;
+  }
+  .pb-inner-card {
+    background: #ffffff; /* Crisp white background */
+    padding: 40px 100px;  /* Internal spacing inside the white box */
+    /* border-radius: 8px;  Uncomment this if you want slightly rounded corners on the card */
+  }
+
+  
+  /* HEADINGS */
+  .pb-main-title {
+    text-align: center;
+    color: $color-primary;
+    font-size: 26px;
+    font-weight: 700;
+    margin: 0 0 5px;
+  }
+
+  .pb-product-title {
+    text-align: center;
+    color: $color-primary;
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0 0 35px;
+    transition: opacity 0.2s ease;
+  }
+}
+
+/* =========================================================
+   CAROUSEL & PROGRESS BAR
+========================================================= */
+.pb-carousel-wrapper {
+  position: relative;
+  width: 100%;
+  margin-bottom: 30px;
+}
+
+.pb-carousel {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  gap: 15px;
+  padding-bottom: 35px;
+  
+  /* PIXEL-PERFECT CENTERING FORMULA */
+  /* 50% of the container minus exactly half of the slide width (130px) */
+  padding-left: calc(50% - 130px); 
+  padding-right: calc(50% - 130px);
+  
+  cursor: grab;
+
+  &:active {
+    cursor: grabbing;
+  }
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.pb-carousel-slide {
+  scroll-snap-align: center;
+  scroll-snap-stop: always;
+  
+  /* Replaced 70% with a fixed width of 260px */
+  flex: 0 0 260px; 
+  width: 260px; 
+  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  opacity: 0.3;
+  transform: scale(0.75);
+  pointer-events: none;
+
+  &.is-active {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+
+  img {
+    width: 100%;
+    /* Max-width removed so the image perfectly fills the 260px container */
+    height: auto;
+    object-fit: contain;
+  }
+}
+
+.pb-progress-bar {
+  width: 75%;
+  height: 4px; /* Increased from 3px */
+  background: $color-progress-track;
+  margin: 0 auto;
+  position: relative;
+  border-radius: 4px; /* Adds a slight rounding to the edges */
+
+  .pb-progress-indicator {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background: $color-primary;
+    transition: transform $transition-default;
+    border-radius: 4px;
+  }
+}
+
+/* =========================================================
+   ACCORDIONS
+========================================================= */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.pb-accordions-container {
+  width: 100%;
+}
+
+.pb-accordion-group {
+  display: none;
+
+  &.is-active {
+    display: block;
+    animation: fadeIn 0.4s ease forwards;
+  }
+}
+
+.pb-accordion-item {
+  
+  /* Trigger Button */
+  .pb-accordion-btn {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 22px 0;
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+
+    .pb-accordion-btn-left {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      color: $color-primary;
+      font-size: 18px; /* Increased from 16px */
+      font-weight: 800; /* Increased to make it bolder */
+      text-transform: lowercase;
+
+      /* Target the SVG or image inside the button to ensure it's large enough */
+      svg, img {
+        width: 26px;
+        height: 26px;
+      }
+    }
+
+    .pb-accordion-arrow {
+      transition: transform $transition-default;
+      display: flex;
+      align-items: center;
+    }
+  }
+
+  /* Hidden Content */
+  .pb-accordion-content {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows $transition-default;
+
+    .pb-accordion-inner {
+      overflow: hidden;
+      color: $color-primary;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+  }
+
+  /* Active/Open State */
+  &.is-open {
+    .pb-accordion-arrow {
+      transform: rotate(180deg);
+    }
+
+    .pb-accordion-content {
+      grid-template-rows: 1fr;
+    }
+
+    .pb-accordion-inner {
+      padding: 10px 0 25px 39px; /* Aligns text cleanly under the heading */
+    }
+  }
+}

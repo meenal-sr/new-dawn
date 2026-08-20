@@ -151,12 +151,43 @@
       ],
       "name": "Bundle product details",
       "settings": {}
+    },
+    "powerful_benefits_8gVKXE": {
+      "type": "powerful-benefits",
+      "blocks": {
+        "product_8xkiNz": {
+          "type": "product",
+          "settings": {
+            "product": "stress-complex"
+          }
+        },
+        "product_x4nhaC": {
+          "type": "product",
+          "settings": {
+            "product": "ashwagandha"
+          }
+        },
+        "product_p8ajeF": {
+          "type": "product",
+          "settings": {
+            "product": "reishi"
+          }
+        }
+      },
+      "block_order": [
+        "product_8xkiNz",
+        "product_x4nhaC",
+        "product_p8ajeF"
+      ],
+      "name": "Powerful Benefits",
+      "settings": {}
     }
   },
   "order": [
     "main",
     "disclosures",
     "related-products",
-    "bundle_product_details_Dac3Hd"
+    "bundle_product_details_Dac3Hd",
+    "powerful_benefits_8gVKXE"
   ]
 }
