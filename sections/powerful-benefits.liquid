@@ -1,200 +1,161 @@
+<!-- 1. Swiper CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@14.0.1/swiper-bundle.min.css" />
 {{ 'powerful-benefits.css' | asset_url | stylesheet_tag }}
 
 <section class="powerful-benefits-section">
   <div class="pb-container">
     <div class="pb-inner-card">
     
-    
-    <!-- HEADER -->
-    <h2 class="pb-main-title">powerful benefits</h2>
-    <!-- This title updates automatically via JS when the carousel swipes -->
-    <h3 class="pb-product-title" id="pb-active-title">
-      {% if section.blocks.size > 0 %}
-        {{ section.blocks.first.settings.product.title | downcase }}
-      {% endif %}
-    </h3>
+      <!-- HEADER -->
+      <h2 class="pb-main-title">powerful benefits</h2>
+      <!-- This title updates automatically via JS when the carousel swipes -->
+      <h3 class="pb-product-title" id="pb-active-title">
+        {% if section.blocks.size > 0 %}
+          {{ section.blocks.first.settings.product.title | downcase }}
+        {% endif %}
+      </h3>
 
-    <!-- CAROUSEL -->
-    <div class="pb-carousel-wrapper">
-      <div class="pb-carousel" id="pb-carousel">
+      <!-- CAROUSEL (Updated to Swiper Structure) -->
+      <div class="pb-carousel-wrapper">
+        <div class="swiper mySwiper" id="pb-carousel">
+          <div class="swiper-wrapper">
+            {% for block in section.blocks %}
+              {% assign product = block.settings.product %}
+              {% if product != blank %}
+                <div class="swiper-slide pb-carousel-slide" data-index="{{ forloop.index0 }}" data-title="{{ product.title | downcase }}">
+                  <img src="{{ product.featured_image | image_url: width: 400 }}" alt="{{ product.title }}">
+                </div>
+              {% endif %}
+            {% endfor %}
+          </div>
+          
+          <!-- Swiper Scrollbar -->
+          <div class="swiper-scrollbar pb-swiper-scrollbar"></div>
+        </div>
+      </div>
+
+      <!-- ACCORDIONS (Unchanged) -->
+      <div class="pb-accordions-container">
         {% for block in section.blocks %}
           {% assign product = block.settings.product %}
+          
           {% if product != blank %}
-            <div class="pb-carousel-slide {% if forloop.first %}is-active{% endif %}" data-index="{{ forloop.index0 }}" data-title="{{ product.title | downcase }}">
-              <img src="{{ product.featured_image | image_url: width: 400 }}" alt="{{ product.title }}">
+            {% assign benefits_list = product.metafields.custom.powerful_benefits_metafield.value %}
+            
+            <!-- Only the active product's group is visible on load -->
+            <div class="pb-accordion-group {% if forloop.first %}is-active{% endif %}" data-index="{{ forloop.index0 }}">
+              
+              <!-- 2. Loop through the metafield items dynamically -->
+              {% for item in benefits_list %}
+                <div class="pb-accordion-item">
+                  
+                  <button type="button" class="pb-accordion-btn">
+                    <span class="pb-accordion-btn-left">
+                      
+                      {% if item.icon != blank %}
+                          {{ item.icon | image_url: width: 24 | image_tag: alt: item.title, class: 'pb-accordion-icon' }}
+                      {% endif %}
+                      
+                      <!-- Dynamic Title from Metafield -->
+                      {{ item.title | downcase }}
+                    </span>
+                    
+                    <span class="pb-accordion-arrow">
+                      <svg width="12" height="8" viewBox="0 0 14 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M1 1L7 7L13 1" stroke="#304b7d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                    </span>
+                  </button>
+                  
+                  <div class="pb-accordion-content">
+                    <div class="pb-accordion-inner">
+                      <!-- Dynamic Content/Description from Metafield -->
+                      {{ item.desc | metafield_tag }}
+                    </div>
+                  </div>
+                  
+                </div>
+              {% endfor %}
+
             </div>
           {% endif %}
         {% endfor %}
       </div>
-      
-      <!-- PROGRESS BAR -->
-      <div class="pb-progress-bar">
-        <div class="pb-progress-indicator" id="pb-progress-indicator"></div>
-      </div>
-    </div>
 
-    <!-- ACCORDIONS -->
-    <div class="pb-accordions-container">
-      {% for block in section.blocks %}
-        {% assign product = block.settings.product %}
-        
-        {% if product != blank %}
-          {% assign benefits_list = product.metafields.custom.powerful_benefits_metafield.value %}
-          
-          <!-- Only the active product's group is visible on load -->
-          <div class="pb-accordion-group {% if forloop.first %}is-active{% endif %}" data-index="{{ forloop.index0 }}">
-            
-            <!-- 2. Loop through the metafield items dynamically -->
-            {% for item in benefits_list %}
-              <div class="pb-accordion-item">
-                
-                <button type="button" class="pb-accordion-btn">
-                  <span class="pb-accordion-btn-left">
-                    
-                    {% if item.icon != blank %}
-                        {{ item.icon | image_url: width: 24 | image_tag: alt: item.title, class: 'pb-accordion-icon' }}
-                    {% endif %}
-                    
-                    <!-- Dynamic Title from Metafield -->
-                    {{ item.title | downcase }}
-                  </span>
-                  
-                  <span class="pb-accordion-arrow">
-                    <svg width="12" height="8" viewBox="0 0 14 8" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path d="M1 1L7 7L13 1" stroke="#304b7d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                  </span>
-                </button>
-                
-                <div class="pb-accordion-content">
-                  <div class="pb-accordion-inner">
-                    <!-- Dynamic Content/Description from Metafield -->
-                    {{ item.desc | metafield_tag }}
-                  </div>
-                </div>
-                
-              </div>
-            {% endfor %}
-
-          </div>
-        {% endif %}
-      {% endfor %}
     </div>
-    </div>
-    
-
   </div>
 </section>
 
-<!-- The custom drag and sync script -->
+<!-- 2. Swiper JS loaded right before our initialization -->
+<script src="https://cdn.jsdelivr.net/npm/swiper@14.0.1/swiper-bundle.min.js"></script>
+
+<!-- The custom drag and sync script (Updated for Swiper 3D) -->
 <script>
-    document.addEventListener('DOMContentLoaded', () => {
-  const carousel = document.getElementById('pb-carousel');
-  const slides = document.querySelectorAll('.pb-carousel-slide');
-  const titleEl = document.getElementById('pb-active-title');
-  const progressIndicator = document.getElementById('pb-progress-indicator');
-  const accordionGroups = document.querySelectorAll('.pb-accordion-group');
-  
-  if(!carousel || slides.length === 0) return;
-
-  const totalSlides = slides.length;
-  progressIndicator.style.width = `${100 / totalSlides}%`;
-
-  let isDown = false;
-  let startX;
-  let scrollLeft;
-  let lastActiveIndex = 0;
-
-  // 1. Mouse Drag to Scroll Logic
-  carousel.addEventListener('mousedown', (e) => {
-    isDown = true;
-    carousel.classList.add('active');
-    // Temporarily turn off CSS snap so the user can drag smoothly
-    carousel.style.scrollSnapType = 'none'; 
-    startX = e.pageX - carousel.offsetLeft;
-    scrollLeft = carousel.scrollLeft;
-  });
-
-  carousel.addEventListener('mouseleave', () => {
-    isDown = false;
-    carousel.classList.remove('active');
-    carousel.style.scrollSnapType = 'x mandatory'; // Turn snap back on
-  });
-
-  carousel.addEventListener('mouseup', () => {
-    isDown = false;
-    carousel.classList.remove('active');
-    carousel.style.scrollSnapType = 'x mandatory'; // Turn snap back on
-  });
-
-  carousel.addEventListener('mousemove', (e) => {
-    if (!isDown) return;
-    e.preventDefault();
-    const x = e.pageX - carousel.offsetLeft;
-    const walk = (x - startX) * 2; // The multiplier determines drag speed
-    carousel.scrollLeft = scrollLeft - walk;
-  });
-
-
-  // 2. Synchronization Logic (Triggered on Scroll)
-  carousel.addEventListener('scroll', () => {
-    let centerPos = carousel.scrollLeft + (carousel.offsetWidth / 2);
-    let activeIndex = 0;
-    let minDistance = Infinity;
-
-    // Calculate which slide is currently closest to the absolute center of the carousel
-    slides.forEach((slide, index) => {
-      let slideCenter = slide.offsetLeft + (slide.offsetWidth / 2);
-      let distance = Math.abs(centerPos - slideCenter);
+  document.addEventListener('DOMContentLoaded', () => {
+    // Timeout ensures Swiper library is ready in Shopify
+    setTimeout(() => {
+      const titleEl = document.getElementById('pb-active-title');
+      const accordionGroups = document.querySelectorAll('.pb-accordion-group');
       
-      if (distance < minDistance) {
-        minDistance = distance;
-        activeIndex = index;
-      }
-    });
+      // Initialize Swiper with 3D Coverflow
+      var swiper = new Swiper('.mySwiper', {
+        effect: 'coverflow', 
+        grabCursor: true,
+        centeredSlides: true,
+        slidesPerView: 'auto', 
+        
+        // Exact 3D math from your inspector screenshot!
+        coverflowEffect: {
+          rotate: 0,       
+          stretch: -20,    
+          depth: 200,      // Pushes side bottles backward
+          modifier: 1,     
+          slideShadows: false, 
+        },
+        
+        // Swiper Scrollbar
+        scrollbar: {
+          el: '.swiper-scrollbar',
+          hide: false, 
+          draggable: true,
+        },
 
-    // Animate active/inactive slides
-    slides.forEach((s, i) => s.classList.toggle('is-active', i === activeIndex));
-    
-    // Only update the rest of the UI if the active slide actually changed
-    if (activeIndex !== lastActiveIndex) {
-      lastActiveIndex = activeIndex;
-      
-      // Update Title
-      const activeSlide = slides[activeIndex];
-      if(activeSlide) {
-        titleEl.textContent = activeSlide.dataset.title;
-      }
+        // Sync logic
+        on: {
+          slideChange: function () {
+            const activeIndex = this.realIndex;
+            const activeSlide = this.slides[activeIndex];
+            
+            // Update Title
+            if (activeSlide && titleEl) {
+              titleEl.textContent = activeSlide.dataset.title;
+            }
 
-      // Update Progress Bar
-      progressIndicator.style.transform = `translateX(${activeIndex * 100}%)`;
-
-      // Swap Accordion Groups
-      accordionGroups.forEach((group, i) => {
-        group.classList.toggle('is-active', i === activeIndex);
+            // Swap Accordion Groups
+            accordionGroups.forEach((group, i) => {
+              group.classList.toggle('is-active', i === activeIndex);
+            });
+          }
+        }
       });
-    }
+
+      // Accordion Click Logic
+      const accordionBtns = document.querySelectorAll('.pb-accordion-btn');
+      accordionBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+          const item = this.closest('.pb-accordion-item');
+          const isOpen = item.classList.contains('is-open');
+          const parentGroup = item.closest('.pb-accordion-group');
+          
+          parentGroup.querySelectorAll('.pb-accordion-item').forEach(i => i.classList.remove('is-open'));
+
+          if(!isOpen) {
+            item.classList.add('is-open');
+          }
+        });
+      });
+    }, 100); 
   });
-
-
-  // 3. Accordion Click Logic
-  const accordionBtns = document.querySelectorAll('.pb-accordion-btn');
-  accordionBtns.forEach(btn => {
-    btn.addEventListener('click', function() {
-      const item = this.closest('.pb-accordion-item');
-      const isOpen = item.classList.contains('is-open');
-      const parentGroup = item.closest('.pb-accordion-group');
-      
-      // Close all other accordions in this group
-      parentGroup.querySelectorAll('.pb-accordion-item').forEach(i => i.classList.remove('is-open'));
-
-      // Toggle current
-      if(!isOpen) {
-        item.classList.add('is-open');
-      }
-    });
-  });
-});
 </script>
 
 {% schema %}
