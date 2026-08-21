@@ -1,0 +1,163 @@
+// ==========================================
+// Variables
+// ==========================================
+$bg-color: #f0f2f5;
+$primary-color: #2d4373;
+$secondary-text-color: #4a5c84;
+$font-stack: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+$mobile-break: 767px;
+
+// ==========================================
+// Main Section Styles
+// ==========================================
+.product-features-main {
+  padding: 60px 20px;
+  overflow: hidden; // Prevents AOS animation from causing horizontal scroll
+  background-color: $bg-color;
+  font-family: $font-stack;
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  // Layout Flexbox
+  .main-flex {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+
+    // Mobile Stacking
+    @media (max-width: $mobile-break) {
+      flex-direction: column;
+    }
+  }
+
+  // ==========================================
+  // Text Content Section (Left on Desktop)
+  // ==========================================
+  .text-content {
+    flex: 1;
+    max-width: 550px;
+
+    @media (max-width: $mobile-break) {
+      order: 2; // Moves text below the image on mobile
+      padding-top: 20px;
+    }
+  }
+
+  .product-features-heading {
+    font-size: 2.8rem;
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 40px;
+    color: $primary-color;
+
+    @media (max-width: $mobile-break) {
+      font-size: 2.2rem;
+      margin-bottom: 30px;
+    }
+  }
+
+  // Dynamic Feature Blocks
+  .product-features-content {
+    .flex-wrap-info {
+      display: flex;
+      align-items: flex-start;
+      margin-bottom: 30px;
+      gap: 20px;
+
+      @media (max-width: $mobile-break) {
+        gap: 15px;
+      }
+
+      // The dynamic circle numbers
+      .number {
+        flex-shrink: 0;
+        width: 45px;
+        height: 45px;
+        border: 1.5px solid $primary-color;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: $primary-color;
+
+        @media (max-width: $mobile-break) {
+          width: 35px;
+          height: 35px;
+          font-size: 1rem;
+        }
+      }
+
+      // Title and Description text
+      .text-info {
+        h3 {
+          font-size: 1.4rem;
+          margin-bottom: 8px;
+          font-weight: 700;
+          color: $primary-color;
+        }
+
+        p {
+          font-size: 1rem;
+          line-height: 1.5;
+          color: $secondary-text-color;
+          margin: 0;
+        }
+      }
+    }
+  }
+
+  // ==========================================
+  // Image Section (Right on Desktop)
+  // ==========================================
+  .image-content {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+
+    img, svg {
+      max-width: 100%;
+      height: auto;
+      object-fit: cover;
+    }
+
+    // Shopify Placeholder SVG styling (optional, keeps it neat if no image uploaded)
+    .placeholder-svg {
+      width: 100%;
+      max-width: 500px;
+      background: #e1e4e8;
+      fill: #8c97a5;
+    }
+
+    // Desktop Image Default (Shown)
+    .Desktop_img {
+      display: block;
+    }
+    
+    // Mobile Image Default (Hidden)
+    .Mobile_img {
+      display: none;
+    }
+
+    // Mobile Image Handling
+    @media (max-width: $mobile-break) {
+      order: 1; // Moves image above the text on mobile
+      width: 100%;
+
+      // Hide Desktop Image on Mobile
+      .Desktop_img {
+        display: none;
+      }
+      
+      // Show Mobile Image on Mobile
+      .Mobile_img {
+        display: block;
+      }
+    }
+  }
+}

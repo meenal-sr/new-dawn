@@ -418,10 +418,10 @@ $transition-default: 0.3s ease;
       /* Force the content to always be open */
       grid-template-rows: 1fr;
 
-      .pb-accordion-inner {
-        padding: 5px 15px 5px 39px; 
-        max-height: 88px; /* Locks height to roughly 3 lines */
-        overflow-y: auto;
+       .pb-accordion-inner {
+         padding: 5px 15px 5px 39px; 
+         max-height: 88px; /* Locks height to roughly 3 lines */
+         overflow-y: auto;
 
         > *:first-child { margin-top: 0; }
         > *:last-child { margin-bottom: 0; }

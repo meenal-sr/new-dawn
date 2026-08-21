@@ -1,0 +1,134 @@
+<!-- Load AOS if it's not already in your theme.liquid -->
+ {{ 'product-feature.css' | asset_url | stylesheet_tag }}
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js" defer></script>
+
+<section class="product-features-main">
+  <div class="container main-flex">
+    
+    <!-- Text Container (Left on Desktop, Bottom on Mobile) -->
+    <div class="product-features-information text-content" data-aos="fade-up">
+      {% if section.settings.heading != blank %}
+        <h2 class="product-features-heading">{{ section.settings.heading }}</h2>
+      {% endif %}
+      
+      <div class="product-features-content">
+        <!-- Dynamically rendering the feature items via Shopify Blocks -->
+        {% for block in section.blocks %}
+          <div class="flex-wrap-info" {{ block.shopify_attributes }}>
+            <div class="number">{{ forloop.index }}</div>
+            <div class="text-info">
+              {% if block.settings.title != blank %}
+                <h3>{{ block.settings.title }}</h3>
+              {% endif %}
+              {% if block.settings.text != blank %}
+                <p>{{ block.settings.text }}</p>
+              {% endif %}
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- Image Container (Right on Desktop, Top on Mobile) -->
+    <div class="product-features-img image-content" data-aos="fade-up" data-aos-delay="400">
+      
+      <!-- Desktop Image Picker -->
+      {% if section.settings.desktop_image != blank %}
+        <img class="Desktop_img" 
+             src="{{ section.settings.desktop_image | img_url: '800x' }}" 
+             alt="{{ section.settings.desktop_image.alt | default: section.settings.heading | escape }}">
+      {% else %}
+        {{ 'image' | placeholder_svg_tag: 'Desktop_img placeholder-svg' }}
+      {% endif %}
+
+      <!-- Mobile Image Picker -->
+      {% if section.settings.mobile_image != blank %}
+        <img class="Mobile_img" 
+             src="{{ section.settings.mobile_image | img_url: '600x' }}" 
+             alt="{{ section.settings.mobile_image.alt | default: section.settings.heading | escape }}">
+      {% else %}
+        {{ 'image' | placeholder_svg_tag: 'Mobile_img placeholder-svg' }}
+      {% endif %}
+      
+    </div>
+
+  </div>
+</section>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    if (typeof AOS !== 'undefined') {
+      AOS.init({
+        duration: 800,
+        once: true
+      });
+    }
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Product Features",
+  "settings": [
+    {
+      "type": "textarea",
+      "id": "heading",
+      "label": "Heading",
+      "default": "the power of high<br>potency pills"
+    },
+    {
+      "type": "header",
+      "content": "Images"
+    },
+    {
+      "type": "image_picker",
+      "id": "desktop_image",
+      "label": "Desktop Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "mobile_image",
+      "label": "Mobile Image",
+      "info": "Used for screens 767px and below"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "feature",
+      "name": "Feature Item",
+      "limit": 5,
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "maximum efficiency"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Text",
+          "default": "High-potency extracts and ingredients in every capsule"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product Features",
+      "blocks": [
+        {
+          "type": "feature"
+        },
+        {
+          "type": "feature"
+        },
+        {
+          "type": "feature"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -172,15 +172,66 @@
           "settings": {
             "product": "reishi"
           }
+        },
+        "product_rGPy6Y": {
+          "type": "product",
+          "settings": {
+            "product": ""
+          }
         }
       },
       "block_order": [
         "product_8xkiNz",
         "product_x4nhaC",
-        "product_p8ajeF"
+        "product_p8ajeF",
+        "product_rGPy6Y"
       ],
       "name": "Powerful Benefits",
       "settings": {}
+    },
+    "key_ingredients_aTybLy": {
+      "type": "key-ingredients",
+      "name": "Key Ingredients Carousel",
+      "settings": {
+        "heading": "key ingredients"
+      }
+    },
+    "product_features_hwqWpw": {
+      "type": "product-features",
+      "blocks": {
+        "feature_H6i66k": {
+          "type": "feature",
+          "settings": {
+            "title": "maximum efficiency",
+            "text": "High-potency extracts and ingredients in every capsule"
+          }
+        },
+        "feature_PikqVP": {
+          "type": "feature",
+          "settings": {
+            "title": "maximum efficiency",
+            "text": "High-potency extracts and ingredients in every capsule"
+          }
+        },
+        "feature_4NBgxh": {
+          "type": "feature",
+          "settings": {
+            "title": "maximum efficiency",
+            "text": "High-potency extracts and ingredients in every capsule"
+          }
+        }
+      },
+      "block_order": [
+        "feature_H6i66k",
+        "feature_PikqVP",
+        "feature_4NBgxh"
+      ],
+      "name": "Product Features",
+      "settings": {
+        "heading": "the power of high<br>potency pills",
+        "desktop_image": "shopify://shop_images/My_project-5_1_desktop.png",
+        "mobile_image": "shopify://shop_images/My_project-5_1_desktop.png"
+      }
     }
   },
   "order": [
@@ -188,6 +239,8 @@
     "disclosures",
     "related-products",
     "bundle_product_details_Dac3Hd",
-    "powerful_benefits_8gVKXE"
+    "powerful_benefits_8gVKXE",
+    "key_ingredients_aTybLy",
+    "product_features_hwqWpw"
   ]
 }
