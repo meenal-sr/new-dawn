@@ -12,6 +12,13 @@
     "main": {
       "type": "main-product",
       "blocks": {
+        "vendor": {
+          "type": "text",
+          "settings": {
+            "text": "{{ product.vendor }}",
+            "text_style": "uppercase"
+          }
+        },
         "title": {
           "type": "title",
           "settings": {}
@@ -27,22 +34,6 @@
             "swatch_shape": "circle"
           }
         },
-        "description": {
-          "type": "description",
-          "settings": {}
-        },
-        "icon_with_text_KhCCCX": {
-          "type": "icon-with-text",
-          "settings": {
-            "layout": "horizontal",
-            "icon_1": "heart",
-            "heading_1": "Heading",
-            "icon_2": "bottle",
-            "heading_2": "bottle",
-            "icon_3": "star",
-            "heading_3": "Heading"
-          }
-        },
         "quantity_selector": {
           "type": "quantity_selector",
           "settings": {}
@@ -50,19 +41,30 @@
         "buy_buttons": {
           "type": "buy_buttons",
           "settings": {
-            "show_dynamic_checkout": false,
+            "show_dynamic_checkout": true,
             "show_gift_card_recipient": true
+          }
+        },
+        "description": {
+          "type": "description",
+          "settings": {}
+        },
+        "share": {
+          "type": "share",
+          "settings": {
+            "share_label": "Share"
           }
         }
       },
       "block_order": [
+        "vendor",
         "title",
         "price",
         "variant_picker",
-        "description",
-        "icon_with_text_KhCCCX",
         "quantity_selector",
-        "buy_buttons"
+        "buy_buttons",
+        "description",
+        "share"
       ],
       "settings": {
         "enable_sticky_info": true,
@@ -78,17 +80,6 @@
         "enable_video_looping": false,
         "padding_top": 36,
         "padding_bottom": 12
-      }
-    },
-    "disclosures": {
-      "type": "disclosures",
-      "settings": {
-        "heading": "Disclosures",
-        "heading_size": "h2",
-        "open_by_default": false,
-        "color_scheme": "",
-        "padding_top": 36,
-        "padding_bottom": 0
       }
     },
     "related-products": {
@@ -108,126 +99,10 @@
         "padding_top": 36,
         "padding_bottom": 28
       }
-    },
-    "bundle_product_details_Dac3Hd": {
-      "type": "bundle-product-details",
-      "blocks": {
-        "product_wbW6Ld": {
-          "type": "product",
-          "settings": {
-            "product": "stress-complex"
-          }
-        },
-        "product_DLrNwe": {
-          "type": "product",
-          "settings": {
-            "product": "ashwagandha"
-          }
-        },
-        "product_ndYKix": {
-          "type": "product",
-          "settings": {
-            "product": "reishi"
-          }
-        }
-      },
-      "block_order": [
-        "product_wbW6Ld",
-        "product_DLrNwe",
-        "product_ndYKix"
-      ],
-      "name": "Bundle product details",
-      "settings": {}
-    },
-    "powerful_benefits_8gVKXE": {
-      "type": "powerful-benefits",
-      "blocks": {
-        "product_8xkiNz": {
-          "type": "product",
-          "settings": {
-            "product": "stress-complex"
-          }
-        },
-        "product_x4nhaC": {
-          "type": "product",
-          "settings": {
-            "product": "ashwagandha"
-          }
-        },
-        "product_p8ajeF": {
-          "type": "product",
-          "settings": {
-            "product": "reishi"
-          }
-        },
-        "product_rGPy6Y": {
-          "type": "product",
-          "settings": {
-            "product": ""
-          }
-        }
-      },
-      "block_order": [
-        "product_8xkiNz",
-        "product_x4nhaC",
-        "product_p8ajeF",
-        "product_rGPy6Y"
-      ],
-      "name": "Powerful Benefits",
-      "settings": {}
-    },
-    "key_ingredients_aTybLy": {
-      "type": "key-ingredients",
-      "name": "Key Ingredients Carousel",
-      "settings": {
-        "heading": "key ingredients"
-      }
-    },
-    "product_features_hwqWpw": {
-      "type": "product-features",
-      "blocks": {
-        "feature_H6i66k": {
-          "type": "feature",
-          "settings": {
-            "title": "maximum efficiency",
-            "text": "High-potency extracts and ingredients in every capsule"
-          }
-        },
-        "feature_PikqVP": {
-          "type": "feature",
-          "settings": {
-            "title": "CONVENIENT DOSAGE",
-            "text": "Easy to take capsules"
-          }
-        },
-        "feature_4NBgxh": {
-          "type": "feature",
-          "settings": {
-            "title": "FEWER DOSES NEEDED",
-            "text": "Higher potency means fewer capsules needed to reap the health benefits compared to other brands"
-          }
-        }
-      },
-      "block_order": [
-        "feature_H6i66k",
-        "feature_PikqVP",
-        "feature_4NBgxh"
-      ],
-      "name": "Product Features",
-      "settings": {
-        "heading": "the power of high<br>potency pills",
-        "desktop_image": "shopify://shop_images/My_project-5_1_desktop.png",
-        "mobile_image": "shopify://shop_images/My_project-5_1_desktop.png"
-      }
     }
   },
   "order": [
     "main",
-    "disclosures",
-    "related-products",
-    "bundle_product_details_Dac3Hd",
-    "powerful_benefits_8gVKXE",
-    "key_ingredients_aTybLy",
-    "product_features_hwqWpw"
+    "related-products"
   ]
 }
