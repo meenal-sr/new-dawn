@@ -1,0 +1,111 @@
+/* custom-product-layout.scss */
+
+@media screen and (min-width: 768px) {
+  .custom-product-split-layout {
+    display: grid !important;
+    /* Creates an equal 50/50 split for the image gallery and product info */
+    grid-template-columns: 1fr 1fr !important; 
+    /* Adjust this gap value to fine-tune the exact spacing between the two columns */
+    column-gap: 5rem !important; 
+    /* Ensures the product details don't stretch to the full height of the images */
+    align-items: start; 
+
+    /* Standard Shopify Dawn theme inner wrapper targeting (optional but recommended for safety) */
+    > .product__media-wrapper {
+      grid-column: 1;
+    }
+    
+    > .product__info-wrapper {
+      grid-column: 2;
+    }
+  }
+}
+
+/* Add to custom-product-layout.scss (or your custom CSS file) */
+
+.custom-info-layout {
+  /* Forces the container to take the full width of the right column */
+  width: 100% !important;
+  max-width: 100% !important; 
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+/* Ensure the parent wrapper isn't limiting the width either */
+.custom-product-split-layout > .product__info-wrapper {
+  width: 100% !important;
+  max-width: 100% !important;
+}
+/* custom-icon-layout.scss */
+
+/* custom-icon-layout.scss */
+
+.custom-icon-grid {
+  display: grid !important;
+  /* Forces a strict 2-column grid */
+  grid-template-columns: repeat(2, 1fr) !important; 
+  gap: 0 !important;
+  margin: 2rem 0 !important;
+  padding: 0 !important;
+  list-style: none !important;
+  
+  border-left: 1px solid #d2d6df !important;
+  width: 100% !important;
+}
+
+.custom-icon-grid > * {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center !important;
+  padding: 2.5rem 1rem !important;
+  border-right: 1px solid #d2d6df !important;
+  border-bottom: 1px solid #d2d6df !important;
+  margin: 0 !important;
+  width: 100% !important;
+  max-width: none !important;
+  box-sizing: border-box !important;
+  
+  /* CRITICAL FIX: Forces each item to strictly occupy only one cell */
+  grid-column: span 1 !important; 
+}
+
+/* Fixes the borders if you accidentally have multiple separate grids stacking */
+.custom-icon-grid + .custom-icon-grid {
+  border-top: none !important;
+  margin-top: 0 !important;
+}
+
+.quantity {
+    border: none !important;
+  }
+
+  /* Style both buttons (Dark Blue state) */
+  .quantity__button {
+    background-color: #334360 !important;
+    color: #ffffff !important;
+    width: 45px !important;
+    height: 45px !important;
+    transition: background-color 0.2s ease;
+  }
+
+  /* Force the inside SVG icons (plus/minus) to be white */
+  .quantity__button svg {
+    fill: #ffffff !important;
+    color: #ffffff !important;
+  }
+
+  /* Style the disabled minus button (Light Grey state) */
+  .quantity__button[name="minus"]:disabled {
+    background-color: #b5bdca !important;
+    cursor: not-allowed !important;
+    opacity: 1 !important; /* Prevents default browser dimming */
+  }
+
+  /* Style the number input text */
+  .quantity__input {
+    color: #334360 !important;
+    font-weight: bold !important;
+    font-size: 1.1rem !important;
+  }

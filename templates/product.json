@@ -39,20 +39,8 @@
             "heading_1": "Heading",
             "icon_2": "bottle",
             "heading_2": "bottle",
-            "icon_3": "truck",
+            "icon_3": "star",
             "heading_3": "Heading"
-          }
-        },
-        "icon_with_text_VTe9gk": {
-          "type": "icon-with-text",
-          "settings": {
-            "layout": "horizontal",
-            "icon_1": "heart",
-            "heading_1": "Heading",
-            "icon_2": "none",
-            "heading_2": "",
-            "icon_3": "none",
-            "heading_3": ""
           }
         },
         "quantity_selector": {
@@ -62,7 +50,7 @@
         "buy_buttons": {
           "type": "buy_buttons",
           "settings": {
-            "show_dynamic_checkout": true,
+            "show_dynamic_checkout": false,
             "show_gift_card_recipient": true
           }
         }
@@ -73,7 +61,6 @@
         "variant_picker",
         "description",
         "icon_with_text_KhCCCX",
-        "icon_with_text_VTe9gk",
         "quantity_selector",
         "buy_buttons"
       ],
@@ -209,15 +196,15 @@
         "feature_PikqVP": {
           "type": "feature",
           "settings": {
-            "title": "maximum efficiency",
-            "text": "High-potency extracts and ingredients in every capsule"
+            "title": "CONVENIENT DOSAGE",
+            "text": "Easy to take capsules"
           }
         },
         "feature_4NBgxh": {
           "type": "feature",
           "settings": {
-            "title": "maximum efficiency",
-            "text": "High-potency extracts and ingredients in every capsule"
+            "title": "FEWER DOSES NEEDED",
+            "text": "Higher potency means fewer capsules needed to reap the health benefits compared to other brands"
           }
         }
       },
