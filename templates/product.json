@@ -40,11 +40,14 @@
             "icon_2": "bottle",
             "heading_2": "bottle",
             "icon_3": "star",
-            "heading_3": "Heading"
+            "heading_3": "Heading",
+            "heading_4": "Heading",
+            "icon_4": "heart"
           }
         },
         "quantity_selector": {
           "type": "quantity_selector",
+          "disabled": true,
           "settings": {}
         },
         "buy_buttons": {
@@ -67,13 +70,13 @@
       "settings": {
         "enable_sticky_info": true,
         "color_scheme": "scheme-1",
-        "media_size": "large",
+        "media_size": "small",
         "constrain_to_viewport": true,
-        "media_fit": "contain",
-        "gallery_layout": "stacked",
+        "media_fit": "cover",
+        "gallery_layout": "thumbnail",
         "mobile_thumbnails": "hide",
         "media_position": "left",
-        "image_zoom": "lightbox",
+        "image_zoom": "hover",
         "hide_variants": true,
         "enable_video_looping": false,
         "padding_top": 36,
@@ -93,6 +96,7 @@
     },
     "related-products": {
       "type": "related-products",
+      "disabled": true,
       "settings": {
         "heading": "You may also like",
         "heading_size": "h2",
@@ -183,6 +187,13 @@
         "heading": "key ingredients"
       }
     },
+    "sticky_add_to_cart_3Gg3Wm": {
+      "type": "sticky-add-to-cart",
+      "name": "Sticky Add to Cart",
+      "settings": {
+        "enable_sticky_banner": true
+      }
+    },
     "product_features_hwqWpw": {
       "type": "product-features",
       "blocks": {
@@ -228,6 +239,7 @@
     "bundle_product_details_Dac3Hd",
     "powerful_benefits_8gVKXE",
     "key_ingredients_aTybLy",
+    "sticky_add_to_cart_3Gg3Wm",
     "product_features_hwqWpw"
   ]
 }

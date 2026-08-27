@@ -1,41 +1,56 @@
 /* custom-product-layout.scss */
 
-@media screen and (min-width: 768px) {
-  .custom-product-split-layout {
-    display: grid !important;
-    /* Creates an equal 50/50 split for the image gallery and product info */
-    grid-template-columns: 1fr 1fr !important; 
-    /* Adjust this gap value to fine-tune the exact spacing between the two columns */
-    column-gap: 5rem !important; 
-    /* Ensures the product details don't stretch to the full height of the images */
-    align-items: start; 
-
-    /* Standard Shopify Dawn theme inner wrapper targeting (optional but recommended for safety) */
-    > .product__media-wrapper {
-      grid-column: 1;
-    }
-    
-    > .product__info-wrapper {
-      grid-column: 2;
-    }
-  }
+@media screen and (min-width: 768px) and (max-width: 1199px) {
+  /* 1. Add spacing between the main image and the thumbnails */
+.product-media-carousel__thumbs-wrap {
+  margin-top: 15px; 
 }
 
-/* Add to custom-product-layout.scss (or your custom CSS file) */
-
-.custom-info-layout {
-  /* Forces the container to take the full width of the right column */
-  width: 100% !important;
-  max-width: 100% !important; 
-  padding-left: 0 !important;
-  padding-right: 0 !important;
+/* 2. Format the thumbnail container to display them in a row with a gap */
+.product-thumbnail-carousel__container {
+  display: flex;
+  gap: 15px; /* Creates the space between the small images */
+  /* Remove any default margin/padding that might misalign it */
+  margin: 0;
+  padding: 0;
 }
 
-/* Ensure the parent wrapper isn't limiting the width either */
-.custom-product-split-layout > .product__info-wrapper {
-  width: 100% !important;
-  max-width: 100% !important;
+/* 3. Style the individual thumbnail wrappers (the immediate children of the container) */
+.product-thumbnail-carousel__container > * {
+  flex: 0 0 auto;
+  width: 80px; /* Adjust this to match your exact desired thumbnail size */
+  height: 80px;
+  cursor: pointer;
+  border: 1.5px solid transparent; /* Transparent border to prevent layout shift on hover/active */
+  background-color: #f8f8f8; /* Matches the slight grey background in the design */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 0.2s ease;
 }
+
+
+/* 4. Style the active/selected thumbnail state */
+/* Note: Your carousel JS will add an active class to the current thumbnail. 
+   You may need to change '.is-active' to '.is-selected' depending on your specific theme's JS */
+.product-thumbnail-carousel__container > .is-active,
+.product-thumbnail-carousel__container > .is-selected,
+.product-thumbnail-carousel__container > *:hover {
+  border-color: #3b5074; /* The dark blue color from your Add to Cart button */
+}
+
+/* 5. Ensure the images fit perfectly inside the square thumbnails */
+.product-thumbnail-carousel__container img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* Keeps the entire bottle visible without cropping */
+  padding: 4px; /* Optional: adds a little breathing room inside the border */
+}
+
+/* 6. Hide carousel navigation arrows if they are not needed (the design doesn't show them) */
+.product-thumbnail-carousel__btn {
+  display: none !important;
+}}
 /* custom-icon-layout.scss */
 
 /* custom-icon-layout.scss */
@@ -109,3 +124,118 @@
     font-weight: bold !important;
     font-size: 1.1rem !important;
   }
+
+  .custom-buy-row
+  {
+    display: flex !important;
+    gap: 25px !important;  
+    margin-bottom: 2rem;
+  }
+@media screen and (min-width: 1200px) {
+  
+  /* 1. Right-Side Card Styling (Background & Padding) */
+  body .product__info-wrapper .custom-info-layout {
+    background-color: #f9f9fb !important;
+    padding: 50px !important;
+    border-radius: 8px !important;
+    height: 100% !important; /* Stretches the background to match the left images */
+  }
+
+  /* 2. Horizontal Icon Layout (4 columns via Grid) */
+  body .custom-icon-grid {
+    display: grid !important;
+    grid-template-columns: repeat(4, 1fr) !important;
+    column-gap: 10px !important;
+    margin: 30px 0 !important;
+    padding: 0 !important;
+    border: none !important;
+  }
+
+  /* 3. Clean up the individual icon blocks */
+  body .custom-icon-grid .icon-with-text__item {
+    border: none !important; /* Strips any default Shopify list borders */
+    text-align: center !important;
+    padding: 0 !important;
+    box-shadow: none !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important; /* Centers the icon above the text */
+    gap: 10px !important; /* Space between the icon and the heading */
+  }
+
+  /* 4. Reinforce the Side-by-Side Action Buttons */
+  /* 5. Hide the entire Quantity and Add to Cart row on mobile */
+  .custom-buy-row
+  {
+    display: flex !important;
+    gap: 25px !important;  
+    margin-bottom: 2rem;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  
+  /* 1. Stack Layout & Remove Desktop Card Styling */
+  body .product__content {
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+  }
+
+  body .product__info-wrapper .custom-info-layout {
+    background-color: transparent !important; /* Removes the gray background */
+    padding: 20px 15px !important; /* Standard mobile breathing room */
+    height: auto !important;
+  }
+
+  /* 2. Full-Width Mobile Media */
+  body .product__media-wrapper,
+  body .product-mobile-media {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  /* 3. The 2x2 Icon Grid Layout */
+  body .custom-icon-grid {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important; /* Forces 2 columns */
+    gap: 0 !important; /* Removing gap so our borders touch */
+    margin: 20px 0 !important;
+    padding: 0 !important;
+    border: none !important;
+  }
+
+  /* Format the individual icon blocks */
+  body .custom-icon-grid .icon-with-text__item {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center !important;
+    padding: 25px 10px !important;
+    margin: 0 !important;
+    border: none !important; /* Clears theme borders */
+    box-shadow: none !important;
+    gap: 12px !important;
+  }
+
+  /* 4. Recreate the Inner Border "Cross" */
+  /* Adds a bottom border to the top two items */
+  body .custom-icon-grid .icon-with-text__item:nth-child(1),
+  body .custom-icon-grid .icon-with-text__item:nth-child(2) {
+    border-bottom: 1px solid #e2e4e8 !important; 
+  }
+
+  /* Adds a right border to the left two items */
+  body .custom-icon-grid .icon-with-text__item:nth-child(1),
+  body .custom-icon-grid .icon-with-text__item:nth-child(3) {
+    border-right: 1px solid #e2e4e8 !important;
+  }
+
+  /* 5. Mobile Action Buttons (Inline but slightly condensed) */
+  body .custom-buy-row {
+    display: none !important
+  }
+  
+  
+}
