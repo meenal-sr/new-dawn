@@ -1,7 +1,7 @@
 <product-info
   id="MainProduct-{{ section.id }}"
   class="section-{{ section.id }}-padding gradient color-{{ section.settings.color_scheme }}"
-  data-section="{{ section.id }}"
+  data-section="{{ section.id }}
   data-product-id="{{ product.id }}"
   data-update-url="true"
   data-url="{{ product.url }}"
@@ -80,7 +80,7 @@
         <div class="grid__item product__media-wrapper">
           {% render 'product-media-gallery', variant_images: variant_images %}
         </div>
-        <div class="product__info-wrapper grid__item{% if settings.page_width > 1400 and section.settings.media_size == "small" %} product__info-wrapper--extra-padding{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+        <div class="product__info-wrapper grid__item{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
           <section
             id="ProductInfo-{{ section.id }}"
             class="product__info-container{% if section.settings.enable_sticky_info %} product__column-sticky{% endif %} custom-info-layout"
@@ -290,7 +290,7 @@
                         >
                       </span>
                     </label>
-                    {% comment %} <div class="price-per-item__container">
+                    <div class="price-per-item__container">
                       <quantity-input class="quantity" data-url="{{ product.url }}" data-section="{{ section.id }}">
                         <button class="quantity__button" name="minus" type="button" {% if product.selected_or_first_available_variant.quantity_rule.min == 1 %}disabled{% endif %}>
                           <span class="visually-hidden">
@@ -481,7 +481,7 @@
                           {%- endif -%}
                         {%- endif -%}
                       </volume-pricing>
-                    {%- endif -%} {% endcomment %}
+                    {%- endif -%} 
                   </div>
                 {%- when 'popup' -%}
                   <modal-opener
@@ -619,6 +619,9 @@
                 {%- if variant_price_compare -%}
                   <dl class="price-per-item--current">
                     <dt class="visually-hidden">
+                      {{ 'products.product.price.sale_price' | t }}
+                    </dt>
+                    <dt class="visually-hidden">
                       {{ 'products.product.price.regular_price' | t }}
                     </dt>
                     <dd>
@@ -626,9 +629,7 @@
                         {{ variant_price_compare | money_with_currency }}
                       </s>
                     </dd>
-                    <dt class="visually-hidden">
-                      {{ 'products.product.price.sale_price' | t }}
-                    </dt>
+                    
                     <dd>
                       <span class="price-per-item--current">
                         {{-

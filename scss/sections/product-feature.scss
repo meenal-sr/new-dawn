@@ -1,7 +1,7 @@
 // ==========================================
 // Variables
 // ==========================================
-$bg-color: #ffffff;
+$bg-color: #eaedf1;
 $primary-color: #2d4373;
 $secondary-text-color: #4a5c84;
 $font-stack: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -10,21 +10,22 @@ $font-stack: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 // DESKTOP STYLES (Default Base Styles)
 // ==========================================
 .product-features-main {
-  padding: 60px 20px;
   overflow: hidden; 
   background-color: $bg-color;
   font-family: $font-stack;
+  padding: 0 20px; // Adds padding to the left and right for smaller screens
 
   .container {
-    max-width: 1200px;
-    margin: 0 auto;
+    max-width: 1180px;
+    
   }
 
   .main-flex {
     display: flex;
-    align-items: center;
+    
     justify-content: space-between;
     gap: 40px;
+    
   }
 
   .text-content {
@@ -33,18 +34,21 @@ $font-stack: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   }
 
   .product-features-heading {
-    font-size: 2.8rem;
+    font-size: 40px;
     font-weight: 700;
-    line-height: 1.1;
+    line-height: 52px;
     margin-bottom: 40px;
     color: $primary-color;
+    padding-top: 120px;
+    
   }
 
   .product-features-content {
+    padding-bottom:88px;
     .flex-wrap-info {
       display: flex;
       align-items: flex-start;
-      margin-bottom: 30px;
+      
       gap: 20px;
 
       .number {
@@ -56,24 +60,25 @@ $font-stack: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 1.2rem;
-        font-weight: 600;
+        font-size: 24px;
+        
         color: $primary-color;
         margin-top: 3px;
       }
 
       .text-info {
         h3 {
-          font-size: 1.4rem;
-          margin-bottom: 8px;
+          font-size: 25px;
+          margin: 0;
           font-weight: 700;
           color: $primary-color;
         }
 
         p {
-          font-size: 1rem;
+          font-size: 18px;
           line-height: 1.5;
           color: $secondary-text-color;
+          padding-bottom: 32px;
           margin: 0;
         }
       }
@@ -81,37 +86,42 @@ $font-stack: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   }
 
   .image-content {
-    flex: 1;
-    display: flex;
-    justify-content: center;
+  flex: 1;
+  display: flex;
+  justify-content: flex-end; /* Pushes the image container to the right edge */
+  align-items: flex-end; /* Anchors the image to the bottom of the section */
 
-    img, svg {
-      max-width: 100%;
-      height: auto;
-      object-fit: cover;
-    }
-
-    .placeholder-svg {
-      width: 100%;
-      max-width: 500px;
-      background: #e1e4e8;
-      fill: #8c97a5;
-    }
-
-    .Desktop_img {
-      display: block;
-    }
-    
-    .Mobile_img {
-      display: none;
-    }
+  img, svg {
+    max-width: 100%;
+    height: auto;
+    object-fit: contain; /* Prevents the severe zooming and cropping */
+    object-position: right bottom; /* Pins the image strictly to the bottom right */
+    margin-left:auto;
+    right:0
   }
+
+  .placeholder-svg {
+    width: 100%;
+    max-width: 500px;
+    background: #e1e4e8;
+    fill: #8c97a5;
+  }
+
+  .Desktop_img {
+    display: block;
+  }
+  
+  .Mobile_img {
+    display: none;
+  }
+}
 }
 
 // ==========================================
 // MOBILE STYLES (max-width: 768px)
 // ==========================================
 @media (max-width: 768px) {
+
   .product-features-main {
     padding: 0; // Removes outer padding for edge-to-edge image
 
@@ -122,52 +132,57 @@ $font-stack: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 
     .text-content {
       order: 2; // Moves text below the image
-      padding: 30px 20px 40px 20px; // Restores padding for the text container
+      padding: 0 20px 0 20px; // Restores padding for the text container
       width: 100%;
       max-width: 100%;
     }
 
     .product-features-heading {
-      font-size: 2.2rem;
-      margin-bottom: 25px;
+      font-size: 32px;
+      margin-bottom: 0;
+      padding: 50px 0 24px !important; // Adjusts top padding for mobile
+      line-height:40px
     }
 
     .product-features-content {
+      
       .flex-wrap-info {
         gap: 15px;
-        margin-bottom: 25px;
 
         .number {
           width: 32px;
           height: 32px;
-          font-size: 1rem;
+          font-size: 24px;
           margin-top: 2px;
         }
 
         .text-info {
           h3 {
-            font-size: 1.25rem;
-            margin-bottom: 5px;
+            font-size: 20px;
+            margin: 0;
           }
 
           p {
-            font-size: 0.95rem;
+            font-size: 18px;
           }
         }
       }
+    }
+    .product-features-information {
+      background-color: #fff;
     }
 
     .image-content {
       order: 1; // Moves image to the top
       width: 100%;
 
-      img {
+      img,svg{
         width: 100%;
         display: block;
       }
 
       .Desktop_img {
-        display: none;
+        display: none !important;
       }
       
       .Mobile_img {

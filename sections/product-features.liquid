@@ -9,14 +9,14 @@
     <!-- Text Container (Left on Desktop, Bottom on Mobile) -->
     <div class="product-features-information text-content" data-aos="fade-up">
       {% if section.settings.heading != blank %}
-        <h2 class="product-features-heading">{{ section.settings.heading }}</h2>
+        <div class="product-features-heading">{{ section.settings.heading }}</div>
       {% endif %}
       
       <div class="product-features-content">
         <!-- Dynamically rendering the feature items via Shopify Blocks -->
         {% for block in section.blocks %}
           <div class="flex-wrap-info" {{ block.shopify_attributes }}>
-            <div class="number">{{ forloop.index }}</div>
+            <div class="number"><span>{{ forloop.index }}</span></div>
             <div class="text-info">
               {% if block.settings.title != blank %}
                 <h3>{{ block.settings.title }}</h3>
@@ -31,25 +31,34 @@
     </div>
 
     <!-- Image Container (Right on Desktop, Top on Mobile) -->
-    <div class="product-features-img image-content" data-aos="fade-up" data-aos-delay="400">
-      
-      <!-- Desktop Image Picker -->
+    <div class="product-features-img image-content "  data-aos="fade-up" data-aos-delay="400">
+      <div class="Desktop_img">
+
       {% if section.settings.desktop_image != blank %}
-        <img class="Desktop_img" 
-             src="{{ section.settings.desktop_image | img_url: '800x' }}" 
-             alt="{{ section.settings.desktop_image.alt | default: section.settings.heading | escape }}">
-      {% else %}
-        {{ 'image' | placeholder_svg_tag: 'Desktop_img placeholder-svg' }}
-      {% endif %}
+  {% render 'shopify-responsive-image', 
+      image: section.settings.desktop_image,
+      aspect_ratio: 0.93,
+      image_attributes: "alt=\"{{ section.settings.desktop_image.alt | escape }}\" class=\"Desktop_img\""
+  %}
+
+{% endif %}
+      </div>
+      <!-- Desktop Image Picker -->
+
+
 
       <!-- Mobile Image Picker -->
-      {% if section.settings.mobile_image != blank %}
-        <img class="Mobile_img" 
-             src="{{ section.settings.mobile_image | img_url: '600x' }}" 
-             alt="{{ section.settings.mobile_image.alt | default: section.settings.heading | escape }}">
-      {% else %}
-        {{ 'image' | placeholder_svg_tag: 'Mobile_img placeholder-svg' }}
-      {% endif %}
+       <div class="Mobile_img">
+        {% if section.settings.mobile_image != blank %}
+          {% render 'shopify-responsive-image', 
+      image: section.settings.mobile_image,
+      image_attributes: "alt=\"{{ section.settings.mobile_image.alt | escape }}\" class=\"Mobile_img\""
+  %}
+  {% endif %}
+       </div>
+      
+        
+      
       
     </div>
 
