@@ -162,7 +162,7 @@
 
               <div class="bundle-product-content{% if product.id == selected_product.id %} bundle-product-content--active{% endif %}" data-product-content="{{ product.id }}">
 
-                <div id="benefits-{{ product.id }}" class="bundle-tab-content">
+                <div id="benefits-{{ product.id }}" class="bundle-tab-content{% if product.id == selected_product.id %} active{% endif %}">
                   {% for item in product_details_right %}
                     {{ item.benefits | metafield_tag }}
                   {% endfor %}
@@ -250,12 +250,13 @@
     productCards.forEach(function (card) {
 
       card.addEventListener('click', function (e) {
-if (e.target.closest('a') || e.target.closest('.bundle-mobile-accordion')) return;        // <-- ADDED THESE 2 LINES
-        var isMobile = window.innerWidth <= 1200;
-        var wasActive = card.classList.contains('bundle-product-card--active');
+        if (e.target.closest('a') || e.target.closest('.bundle-mobile-accordion')) return;
+        var isMobile = window.innerWidth <= 1199;
         
-        
-
+        if (isMobile) {
+          card.classList.toggle('bundle-product-card--active');
+          return; // Stop running desktop code on mobile
+        }
 
         var productId = card.dataset.productId;
 
@@ -268,12 +269,6 @@ if (e.target.closest('a') || e.target.closest('.bundle-mobile-accordion')) retur
             'bundle-product-card--active'
           );
         });
-        if (isMobile) {
-          if (!wasActive) {
-            card.classList.add('bundle-product-card--active');
-          }
-          return; // Stop running the rest of the code on mobile
-        }
 
         productContents.forEach(function (content) {
           content.classList.remove(
@@ -327,19 +322,9 @@ if (e.target.closest('a') || e.target.closest('.bundle-mobile-accordion')) retur
     var mobileAccordionBtns = document.querySelectorAll('.bundle-mobile-accordion__btn');
     mobileAccordionBtns.forEach(function (btn) {
       btn.addEventListener('click', function (e) {
-        
         var item = this.closest('.bundle-mobile-accordion__item');
-        var parentCard = item.closest('.bundle-product-card');
-        var isOpen = item.classList.contains('is-open');
-
-        // Close all other tabs inside THIS specific product card
-        parentCard.querySelectorAll('.bundle-mobile-accordion__item').forEach(function (i) {
-          i.classList.remove('is-open');
-        });
-
-        // Toggle the clicked tab open if it was closed
-        if (!isOpen) {
-          item.classList.add('is-open');
+        if (item) {
+          item.classList.toggle('is-open');
         }
       });
     });

@@ -15,10 +15,7 @@ $font-stack: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-family: $font-stack;
   padding: 0 20px; // Adds padding to the left and right for smaller screens
 
-  .container {
-    max-width: 1180px;
-    
-  }
+  
 
   .main-flex {
     display: flex;
@@ -31,6 +28,7 @@ $font-stack: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   .text-content {
     flex: 1;
     max-width: 550px;
+    padding-left:40px
   }
 
   .product-features-heading {
@@ -90,6 +88,7 @@ $font-stack: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   display: flex;
   justify-content: flex-end; /* Pushes the image container to the right edge */
   align-items: flex-end; /* Anchors the image to the bottom of the section */
+  position: relative; /* Ensures the image can be positioned relative to this container */
 
   img, svg {
     max-width: 100%;
@@ -109,6 +108,7 @@ $font-stack: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 
   .Desktop_img {
     display: block;
+    aspect-ratio: 1.26
   }
   
   .Mobile_img {

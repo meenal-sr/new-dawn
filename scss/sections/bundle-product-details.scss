@@ -4,7 +4,7 @@
 
 .bundle-product-details {
  display: grid;
-  grid-template-columns: 382px 1fr;
+  grid-template-columns: 33% 48%;
   gap: 241px;
   width: 100%;
   max-width: 1139px;
@@ -28,7 +28,7 @@
 .bundle-product-details__tab-content {
   padding-top: 18px;
   color: #304b7d;
-  font-size: 15px;
+  font-size: 18px;
   line-height: 1.7;
 }
 
@@ -50,11 +50,13 @@
   min-height: 120px;
   background: #fff;
   border: 1px solid transparent;
+  padding: 20px 24px;
+  box-sizing: border-box;
 }
 
 .bundle-product-card--active {
   border: 2px solid #304b7d;
-  padding-bottom: 54px;
+  padding-bottom: 75px;
 }
 
 .bundle-product-card__image {
@@ -67,8 +69,9 @@
 
 .bundle-product-card__image img {
   display: block;
-  width: 75px;
-  height: auto;
+  width: 97px;
+  height: 103px;
+  object-fit: contain;
 }
 
 .bundle-product-card__info {
@@ -81,7 +84,7 @@
 .bundle-product-card__info h4 {
   margin: 0;
   color: #304b7d;
-  font-size: 17px;
+  font-size: 18px;
   font-weight: 600;
   text-transform: lowercase;
 }
@@ -92,7 +95,7 @@
   border-radius: 20px;
   background: #304b7d;
   color: #fff;
-  font-size: 13px;
+  font-size: 14px;
   line-height: 1;
 }
 
@@ -102,7 +105,7 @@
   bottom: 0;
   left: 0;
   width: 100%;
-  height: 55px;
+  height: 52px;
   align-items: center;
   justify-content: center;
   background: #304b7d;
@@ -121,9 +124,10 @@
   padding: 12px 17px;
   background: transparent;
   color: #304b7d;
-  font-size: 17px;
+  font-size: 25px;
   font-weight: 500;
   cursor: pointer;
+  text-transform: lowercase;
 }
 
 .bundle-tab.active {
@@ -158,7 +162,7 @@
 /* =========================================================
    MOBILE ONLY (1200px and below)
    ========================================================= */
-@media screen and (max-width: 1200px) {
+@media screen and (max-width: 1199px) {
     .bundle-product-details {
     display: block;
     width: 100%;
@@ -166,6 +170,11 @@
     padding: 25px 20px 40px; /* 20px left and right padding */
     box-sizing: border-box;
   }
+
+  .bundle-product-card--active {
+  border: none;
+  
+}
 
   /* Force the product column to take up the entire width */
   .bundle-product-details__products {
@@ -179,6 +188,7 @@
   
   /* 1. Base Mobile Card (Forces children to stack horizontally) */
   .bundle-product-card {
+    
     position: relative;
     flex-wrap: wrap; /* THIS is what forces the button and accordion to drop to the next line */
     align-items: flex-start;
@@ -190,11 +200,20 @@
     padding-bottom: 0; 
   }
 
+  .bundle-product-card__image {
+    margin-right: 24px !important;
+    width: 103px;
+    height:97px
+  }
+  
+  
+  
+
   /* 2. Product Info (Ensure it takes up the rest of the top row) */
   .bundle-product-card__info {
     flex: 1;
     padding-right: 40px; /* Keeps text away from the arrow */
-    margin-top: 5px;
+    margin-top: 16px;
   }
 
   /* 3. Arrow Toggle (Lock it to the top row) */
@@ -281,4 +300,18 @@
   .bundle-product-details__content {
     display: none !important;
   }
+}
+
+@media screen and (min-width: 990px) and (max-width: 1199px) {
+  .bundle-product-card {
+    padding-left: 105px; /* Exact spacing shown in SS1 */
+  }
+  .bundle-product-card__info {
+
+        margin-left: 50px
+      }
+
+
+  
+
 }

@@ -103,11 +103,14 @@
         grabCursor: true,
         centeredSlides: true,
         slidesPerView: 'auto', 
+        slideToClickedSlide: true,
+        observer: true,           // Auto-renders scrollbar once images mount
+        observeParents: true,
+        watchSlidesProgress: true,
         
-        // Exact 3D math from your inspector screenshot!
         coverflowEffect: {
           rotate: 0,       
-          stretch: -20,    
+          stretch: 0,    
           depth: 200,      // Pushes side bottles backward
           modifier: 1,     
           slideShadows: false, 
@@ -118,6 +121,17 @@
           el: '.swiper-scrollbar',
           hide: false, 
           draggable: true,
+        },
+
+        // Responsive Breakpoints
+        breakpoints: {
+          1200: {
+            effect: 'slide',
+            centeredSlides: false,
+            slidesPerView: 3,
+            spaceBetween: 30,
+            allowTouchMove: false
+          }
         },
 
         // Sync logic
@@ -139,19 +153,28 @@
         }
       });
 
+      // Direct Click on Slides for Desktop & Touch
+      const slides = document.querySelectorAll('.pb-carousel-slide');
+      slides.forEach((slide, index) => {
+        slide.addEventListener('click', () => {
+          swiper.slideTo(index);
+          slides.forEach((s, i) => s.classList.toggle('swiper-slide-active', i === index));
+          if (titleEl) {
+            titleEl.textContent = slide.dataset.title;
+          }
+          accordionGroups.forEach((group, i) => {
+            group.classList.toggle('is-active', i === index);
+          });
+        });
+      });
+
       // Accordion Click Logic
+      // Accordion Click Logic (Independent Toggle)
       const accordionBtns = document.querySelectorAll('.pb-accordion-btn');
       accordionBtns.forEach(btn => {
         btn.addEventListener('click', function() {
           const item = this.closest('.pb-accordion-item');
-          const isOpen = item.classList.contains('is-open');
-          const parentGroup = item.closest('.pb-accordion-group');
-          
-          parentGroup.querySelectorAll('.pb-accordion-item').forEach(i => i.classList.remove('is-open'));
-
-          if(!isOpen) {
-            item.classList.add('is-open');
-          }
+          item.classList.toggle('is-open');
         });
       });
     }, 100); 

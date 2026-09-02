@@ -37,7 +37,7 @@
             "layout": "horizontal",
             "icon_1": "none",
             "image_1": "shopify://shop_images/bottles.svg",
-            "heading_1": "3 product",
+            "heading_1": "3 products",
             "icon_2": "bottle",
             "image_2": "shopify://shop_images/st.svg",
             "heading_2": "Stress Relief",
@@ -74,7 +74,7 @@
       "settings": {
         "enable_sticky_info": true,
         "color_scheme": "scheme-1",
-        "media_size": "small",
+        "media_size": "medium",
         "constrain_to_viewport": true,
         "media_fit": "cover",
         "gallery_layout": "thumbnail",
