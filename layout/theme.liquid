@@ -113,5 +113,7 @@
     {% if settings.quick_add or settings.mobile_quick_add %}
       {% render 'quick-add-modal' %}
     {% endif %}
+    <script src="{{'vendors.js' | asset_url }}" defer></script> <script src="{{'global.js' | asset_url }}" defer></script> <script src="{{'shared.js' | asset_url }}" async></script> <script src="{{'sections.js' | asset_url }}" defer></script>
+{{ 'common-imports.css' | asset_url | stylesheet_tag: preload: true }}
   </body>
 </html>

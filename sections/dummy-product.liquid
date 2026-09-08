@@ -1,0 +1,120 @@
+{{ 'dummy-product.css' | asset_url | stylesheet_tag }}
+{% assign product = section.settings.product %}
+<section class="dummy-product">
+  
+  <div class="dummy-product__container tw-grid tw-grid-cols-2 tw-gap-7">
+        {{ section.settings.product.selected_or_first_available_variant.id }}
+
+
+    <!-- Product Image -->
+    <div class="dummy-product__media">
+      {% if section.settings.image != blank %}
+        {% render 'shopify-responsive-image',
+          image: section.settings.image,
+          aspect_ratio: 1.2,
+          crop: true,
+          wrapper_class: 'dummy-product__image'
+        %}
+      {% endif %}
+    </div>
+
+    <!-- Product Information -->
+    <div class="dummy-product__info">
+
+      <div class="dummy-product__details">
+        <h2 class="dummy-product__title">
+          {{ section.settings.title }}
+        </h2>
+
+        <div class="dummy-product__price">
+          {{ section.settings.price }}
+        </div>
+      </div>
+
+      <!-- Quantity -->
+      <div class="dummy-product__quantity">
+        <label class="dummy-product__label">
+          Quantity
+        </label>
+
+        <div class="quantity-selector">
+          <button
+            type="button"
+            class="quantity-selector__button"
+            aria-label="Decrease quantity"
+          >
+            −
+          </button>
+
+          <span class="quantity-selector__value">
+            1
+          </span>
+
+          <button
+            type="button"
+            class="quantity-selector__button"
+            aria-label="Increase quantity"
+          >
+            +
+          </button>
+        </div>
+      </div>
+
+      <!-- Buy Buttons -->
+      <div class="buy-buttons">
+        <button
+          type="button"
+          class="buy-buttons__add"
+          data-variant-id="{{ section.settings.product.selected_or_first_available_variant.id }}"
+        >
+          Add to cart
+        </button>
+
+        <button
+          type="button"
+          class="buy-buttons__buy"
+        >
+          Buy now
+        </button>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+
+{% schema %}
+{
+  "name": "Dummy Product",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Product Title",
+      "default": "Sample Product"
+    },
+    {
+      "type": "text",
+      "id": "price",
+      "label": "Product Price",
+      "default": "$19.99"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Product Image"
+    },
+    {
+  "type": "product",
+  "id": "product",
+  "label": "Product"
+}
+  ],
+  "presets": [
+    {
+      "name": "Default Dummy Product"
+    }
+  ]
+}
+{% endschema %}
