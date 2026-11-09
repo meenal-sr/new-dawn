@@ -35,11 +35,7 @@
       <div class="Desktop_img">
 
       {% if section.settings.desktop_image != blank %}
-  {% render 'shopify-responsive-image', 
-      image: section.settings.desktop_image,
-      aspect_ratio: 0.93,
-      image_attributes: "alt=\"{{ section.settings.desktop_image.alt | escape }}\" class=\"Desktop_img\""
-  %}
+  {% render 'shopify-responsive-image', image: section.settings.desktop_image, aspect_ratio: 0.93, image_attributes: "alt=\" %}
 
 {% endif %}
       </div>
@@ -50,10 +46,7 @@
       <!-- Mobile Image Picker -->
        <div class="Mobile_img">
         {% if section.settings.mobile_image != blank %}
-          {% render 'shopify-responsive-image', 
-      image: section.settings.mobile_image,
-      image_attributes: "alt=\"{{ section.settings.mobile_image.alt | escape }}\" class=\"Mobile_img\""
-  %}
+          {% render 'shopify-responsive-image', image: section.settings.mobile_image, image_attributes: "alt=\" %}
   {% endif %}
        </div>
       
@@ -140,4 +133,22 @@
     }
   ]
 }
-{% endschema %}
+{% endschema %}{%- comment -%}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: "{% render 'shopify-responsive-image', \n      image: section.settings.desktop_image,\n
+    \     aspect_ratio: 0.93,\n      image_attributes: \"alt=\\\"{{ section.settings.desktop_image.alt
+    | escape }}\\\" class=\\\"Desktop_img\\\"\"\n  %}"
+  to: '{% render ''shopify-responsive-image'', image: section.settings.desktop_image,
+    aspect_ratio: 0.93, image_attributes: "alt=\" %}'
+  position: 1569..1694
+- from: "{% render 'shopify-responsive-image', \n      image: section.settings.mobile_image,\n
+    \     image_attributes: \"alt=\\\"{{ section.settings.mobile_image.alt | escape
+    }}\\\" class=\\\"Mobile_img\\\"\"\n  %}"
+  to: '{% render ''shopify-responsive-image'', image: section.settings.mobile_image,
+    image_attributes: "alt=\" %}'
+  position: 1893..1997
+{%- endcomment -%}
